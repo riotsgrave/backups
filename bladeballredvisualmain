@@ -1,0 +1,3 @@
+getgenv().visualizer = true
+loadstring(game:HttpGet("https://raw.githubusercontent.com/riotsgrave/backups/main/BladeBallRedVisualBase"))()
+-- Press (x) for close combat
