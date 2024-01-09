@@ -1,0 +1,83 @@
+-- inf gem without 0 fps lmao
+
+getgenv().autoGems = true;
+getgenv().farmNoob = true; -- farms noob for gems
+getgenv().unRagdoll = true; -- breaks cars lmfao
+
+
+
+
+
+-- Services
+local Players = game:GetService("Players");
+local vim = game:GetService("VirtualInputManager");
+local replicated = game:GetService("ReplicatedStorage")
+
+-- LocalPlayer
+local Plr = Players.LocalPlayer;
+local Char = Plr.Character or Plr.CharacterAdded:Wait();
+local Backpack = Plr.Backpack;
+
+-- Gem Farming
+task.spawn(function()
+    while task.wait(0.1) do
+        if getgenv().autoGems then
+            for i,v in pairs(workspace:GetChildren()) do
+                if v:IsA("Part") and v.Name == "Gem" then
+                    v.CFrame = Char.HumanoidRootPart.CFrame
+                end
+            end
+        end
+    end
+end)
+
+
+-- auto get up
+task.spawn(function()
+    while task.wait(0.1) do
+        if getgenv().unRagdoll then
+            replicated.Events.unRagdoll:FireServer(Char)
+        end
+    end
+end)
+
+task.spawn(function()
+    while task.wait(0.1) do
+        if getgenv().meteors then
+            local StarterCharacter = workspace:FindFirstChild("StarterCharacter");
+            local Punch = Backpack:FindFirstChild("Punch");
+
+            if Punch then
+                Punch.Parent = Char -- Equip Punch
+            elseif StarterCharacter and Char:FindFirstChild("Punch") then
+
+                for i,v in pairs(workspace.Meteorites:GetDescendants()) do
+                    if v:IsA("Part") and v.Name == "RootPart" then
+                        Char.HumanoidRootPart.CFrame = v.CFrame;
+                        vim:SendMouseButtonEvent(4, 1, 0, true, game, 1);
+                    end
+                end
+            end
+        end
+    end
+end)
+
+task.spawn(function()
+    while task.wait(0.1) do
+        if getgenv().farmNoob then
+            local StarterCharacter = workspace:FindFirstChild("StarterCharacter");
+            local Punch = Backpack:FindFirstChild("Punch");
+
+            if Punch then
+                Punch.Parent = Char -- Equip Punch
+            elseif StarterCharacter and Char:FindFirstChild("Punch") then
+                for i,v in pairs(StarterCharacter:GetChildren()) do
+                    if v:IsA("Part") and v.Name == "HumanoidRootPart" then
+                        Char.HumanoidRootPart.CFrame = v.CFrame * CFrame.new(0,0,2);
+                        vim:SendMouseButtonEvent(4, 1, 0, true, game, 1);
+                    end
+                end
+            end
+        end
+    end
+end)
